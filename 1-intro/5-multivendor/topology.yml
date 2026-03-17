@@ -1,0 +1,12 @@
+provider: clab
+module: [ isis, sr ]
+
+nodes:
+  pe1:
+    device: eos
+  p:
+    device: frr
+  pe2:
+    device: crpd
+
+links: [ pe1-p, p-pe2 ]

@@ -1,0 +1,22 @@
+name: intro
+
+topology:
+  kinds:
+    ceos:
+      env: {'INTFTYPE': 'et', 'CLAB_MGMT_VRF': 'management'}
+      image: ceos:4.35.2F
+  nodes:
+    pe1:
+      kind: ceos
+    p:
+      kind: ceos
+    pe2:
+      kind: ceos
+
+  links:
+  - endpoints:
+    - "pe1:et1"
+    - "p:et1"
+  - endpoints:
+    - "p:et2"
+    - "pe2:et1"

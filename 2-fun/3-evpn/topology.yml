@@ -1,0 +1,28 @@
+provider: clab
+defaults.device: eos
+
+bgp.as: 65000
+evpn.transport: sr
+
+groups:
+  _auto_create: True
+  core:
+    members: [ p1 ]
+    module: [ isis, sr ]
+  edge:
+    members: [ pe1, pe2 ]
+    module: [ isis, bgp, sr, vlan, evpn ]
+  hosts:
+    members: [ ha, hb ]
+    device: linux
+
+vlans:
+  tenant:
+    mode: bridge
+    links: [ ha-pe1, hb-pe2 ]
+
+evpn.vlans: [ tenant ]
+
+links:
+- group: core
+  members: [ pe1-p1, p1-pe2 ]

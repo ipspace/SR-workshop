@@ -1,0 +1,9 @@
+provider: clab
+defaults.device: eos
+
+module: [ ospf, sr ]
+sr.protocol: ospfv2
+
+nodes: [ pe1, p, pe2 ]
+
+links: [ pe1-p, p-pe2 ]
