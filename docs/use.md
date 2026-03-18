@@ -1,6 +1,8 @@
 # Using the Labs
 
-The repository contains _netlab_ lab topologies and related usage instructions. You can start your labs in GitHub Codespaces, or [install netlab locally](https://netlab.tools/install/) or in a [cloud VM](https://netlab.tools/install/cloud/).
+The repository contains _netlab_ lab topologies and related usage instructions. You can start your labs in GitHub Codespaces ([instructions from a similar project](https://evpn.bgplabs.net/4-codespaces/)), or [install netlab locally](https://netlab.tools/install/) or in a [cloud VM](https://netlab.tools/install/cloud/).
+
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/ipspace/sr-workshop)
 
 To start a lab:
 
