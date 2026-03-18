@@ -1,6 +1,6 @@
-# Simple SR-MPLS with IS-IS
+# SR-MPLS with OSPFv2
 
-This lab topology describes a simple 3-node network using SR-MPLS with IS-IS.
+This lab topology describes a 3-node network running SR-MPLS with OSPFv2.
 
 ![](../../images/intro-topology.png)
 

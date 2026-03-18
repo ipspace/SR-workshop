@@ -1,6 +1,6 @@
-# Simple SR-MPLS with IS-IS
+# Multivendor SR-MPLS with IS-IS
 
-This lab topology describes a simple 3-node network using SR-MPLS with IS-IS.
+This lab topology describes a multivendor (Arista EOS, FRRouting, Junos cRPD) 3-node network running SR-MPLS with IS-IS.
 
 ![](../../images/intro-topology.png)
 
