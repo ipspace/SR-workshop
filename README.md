@@ -2,6 +2,10 @@
 
 This repository contains _netlab_ and _containerlab_ topology files for a series of hands-on labs used during the Segment Routing workshop:
 
+## How to run labs
+
+See [How to run labs](docs/use.md) for detailed instructions on setting up and running these labs.
+
 Introductory scenarios:
 
 * [Starting a lab with containerlab](1-intro/1-clab)
