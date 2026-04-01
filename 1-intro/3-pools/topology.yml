@@ -1,0 +1,19 @@
+provider: clab
+defaults.device: frr
+module: [ isis, sr ]
+
+isis.area: "49.0042"
+addressing:
+  loopback:
+    ipv4: 10.0.42.0/24
+    ipv6: 2001:db8::/48
+  core:
+    ipv4: 192.168.42.0/24
+    prefix: 31
+    ipv6: 2001:db8:cafe::/48
+
+nodes: [ pe1, p, pe2 ]
+links:
+- group: core
+  pool: core
+  members: [ pe1-p, p-pe2 ]

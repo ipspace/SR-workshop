@@ -10,9 +10,10 @@ Introductory scenarios:
 
 * [Starting a lab with containerlab](1-intro/1-clab)
 * [Simple SR-MPLS with IS-IS](1-intro/2-netlab)
-* [SR-MPLS using IS-IS with unnumbered interfaces](1-intro/3-unnumbered)
-* [SR-MPLS with OSPFv2](1-intro/4-ospf)
-* [Multivendor SR-MPLS with IS-IS](1-intro/5-multivendor)
+* [Changing System Defaults](1-intro/3-pools)
+* [SR-MPLS using IS-IS with unnumbered interfaces](1-intro/4-unnumbered)
+* [SR-MPLS with OSPFv2](1-intro/5-ospf)
+* [Multivendor SR-MPLS with IS-IS](1-intro/6-multivendor)
 
 Using SR-MPLS as the transport core:
 

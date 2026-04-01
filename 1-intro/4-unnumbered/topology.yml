@@ -6,3 +6,6 @@ module: [ isis, sr ]
 nodes: [ pe1, p, pe2 ]
 
 links: [ pe1-p, p-pe2 ]
+
+tools:
+  edgeshark:
