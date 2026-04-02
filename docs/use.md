@@ -15,5 +15,5 @@ Use these commands to create lab topology reports:
 * **netlab report devices** -- nodes, node IDs, device types, and device images
 * **netlab report wiring** -- lab nodes and links
 * **netlab report addressing** -- lab addressing
-* **netlab report isis-node** -- IS-IS routing
+* **netlab report isis-nodes** -- IS-IS routing
 * **netlab report mgmt** -- Management access to lab devices

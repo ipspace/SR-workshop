@@ -15,7 +15,7 @@ netlab report isis-nodes
 
 netlab connect pe1
 show run section router isis
-show run section interface loop 0
+show run section interface Loopback0
 show isis database detail
 show isis segment-routing
 show isis segment-routing prefix-segments
@@ -24,7 +24,7 @@ show isis segment-routing global-blocks
 
 netlab down
 
-## Dual-Stack SR-MPLS (1-intro/3-pools)
+## Dual-Stack SR-MPLS (1-intro/3-ds)
 
 netlab up
 netlab report addressing
