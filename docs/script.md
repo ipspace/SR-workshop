@@ -73,3 +73,36 @@ show isis segment-routing global-blocks
 show mpls route
 
 netlab down
+
+## BGP-Free Core
+
+netlab up
+netlab report bgp
+
+netlab connect pe1
+show ip bgp summary
+show ip bgp
+show ip route
+
+netlab connect ha ping hb
+netlab down
+
+## MPLS/VPN over SR-MPLS
+
+netlab up
+netlab connect pe1
+show vrf
+show bgp vpn-ipv4 detail
+show ip route vrf tenant
+
+## EVPN over SR-MPLS
+
+netlab up
+netlab connect ha ping hb
+netlab connect pe1
+show bgp evpn route-type mac-ip detail
+show l2rib input all detail
+show tunnel rib 10.0.0.3/32 candidates
+
+netlab show modules -m evpn
+netlab down
