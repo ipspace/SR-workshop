@@ -74,7 +74,7 @@ show mpls route
 
 netlab down
 
-## BGP-Free Core
+## BGP-Free Core (2-fun/1-bgp-free)
 
 netlab up
 netlab report bgp
@@ -87,15 +87,18 @@ show ip route
 netlab connect ha ping hb
 netlab down
 
-## MPLS/VPN over SR-MPLS
+## MPLS/VPN over SR-MPLS (2-fun/2-mpls-vpn)
 
 netlab up
+
 netlab connect pe1
 show vrf
 show bgp vpn-ipv4 detail
 show ip route vrf tenant
 
-## EVPN over SR-MPLS
+netlab down
+
+## EVPN over SR-MPLS (2-fun/3-evpn)
 
 netlab up
 netlab connect ha ping hb
