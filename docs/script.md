@@ -3,7 +3,7 @@
 ## Containerlab demo (1-intro/1-clab)
 
 containerlab deploy
-docker exec -it clab-intro-p FastCLI
+docker exec -it clab-intro-p Cli
 ssh clab-intro-p
 containerlab destroy
 
@@ -22,6 +22,7 @@ show isis segment-routing prefix-segments
 show mpls route
 show isis segment-routing global-blocks
 
+netlab show modules -m sr
 netlab down
 
 ## Dual-Stack SR-MPLS (1-intro/3-ds)
