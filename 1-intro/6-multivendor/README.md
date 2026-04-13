@@ -8,4 +8,4 @@ For general instructions on starting labs, connecting to devices, and generating
 
 Edit `topology.yml` file to change the devices used in this lab. You can use any device [supported](https://netlab.tools/module/sr-mpls/#supported-platforms) by the netlab [SR-MPLS module](https://netlab.tools/module/sr-mpls/).
 
-**Note:** Nokia SR Linux requires a local license file. If you use SR Linux in this lab, obtain the license from Nokia and save it as `~/.netlab/license_srlinux.txt` before starting the lab. If you do not have that file, change the topology to use other supported SR-MPLS platforms.
+**Note:** Nokia SR Linux requires a local license file to run MPLS or SR-MPLS. If you use SR Linux in this lab, obtain the license from Nokia and save it as `~/.netlab/license_srlinux.txt` before starting the lab. If you do not have that file, change the topology to use other supported SR-MPLS platforms.
