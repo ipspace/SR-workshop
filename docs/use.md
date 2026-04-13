@@ -7,7 +7,12 @@ The repository contains _netlab_ lab topologies and related usage instructions. 
 To start a lab:
 
 * Change current directory to the lab directory
-* Execute `netlab up` to start the lab with Arista cEOS containers (default settings) or `netlab up -d _device_` to start the lab with [another device](https://netlab.tools/platforms/).
+* Execute `netlab up` to start the lab with Arista cEOS containers (default settings) or `netlab up -d _device_` to start the lab with [another device](https://netlab.tools/platforms/). You can also change the NETLAB_DEVICE environment variable to use a different device type for all labs, for example:
+
+```
+$ export NETLAB_DEVICE=frr
+```
+
 * Connect to lab devices with `netlab connect _nodename_`.
 
 Use these commands to create lab topology reports:

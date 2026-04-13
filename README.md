@@ -6,6 +6,8 @@ This repository contains _netlab_ and _containerlab_ topology files for a series
 
 See [How to run labs](docs/use.md) for detailed instructions on setting up and running these labs.
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/ipspace/sr-workshop)
+
 Introductory scenarios:
 
 * [Starting a lab with containerlab](1-intro/1-clab)
