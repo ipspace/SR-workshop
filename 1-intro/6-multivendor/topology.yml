@@ -1,12 +1,16 @@
 provider: clab
 module: [ isis, sr ]
 
+defaults.devices.srlinux.clab.node:
+  license: ~/.netlab/license_srlinux.txt
+  type: ixr6
+
 nodes:
   pe1:
     device: eos
   p:
     device: frr
   pe2:
-    device: crpd
+    device: srlinux
 
 links: [ pe1-p, p-pe2 ]
