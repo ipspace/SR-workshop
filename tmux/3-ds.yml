@@ -1,7 +1,7 @@
 ---
 directory: 1-intro/3-ds
 steps:
-  "Start the lab": netlab up
+  "Start the lab": { cmd: netlab up, wait: True }
   "Addressing report": netlab report addressing
   "IS-IS report": netlab report isis-nodes
   "Connect to PE1": netlab connect pe1
@@ -13,4 +13,4 @@ steps:
   "Done with PE1": |-
     exit
     exit
-  "Stop the lab": netlab down --cleanup
+  "Stop the lab": { cmd: netlab down --cleanup, wait: True }

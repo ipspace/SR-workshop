@@ -1,10 +1,10 @@
 ---
 directory: 1-intro/2-netlab
 steps:
-  "Start the lab": netlab up
+  "Start the lab": { cmd: netlab up, wait: True }
   "Addressing report": netlab report addressing
   "IS-IS report": netlab report isis-nodes
-  "Connect to PE1": netlab connect pe1
+  "Connect to PE1": { cmd: netlab connect pe1, wait: "pe1#" }
   "IS-IS configuration": |-
 
     show run section router isis
@@ -19,4 +19,4 @@ steps:
   "Global blocks": show isis segment-routing global-blocks
   "Done with PE1": exit
   "Supported devices": netlab show modules -m sr
-  "Stop the lab": netlab down --cleanup
+  "Stop the lab": { cmd: netlab down --cleanup, wait: True }

@@ -1,10 +1,10 @@
 ---
 directory: 1-intro/5-ospf
 steps:
-  "Start the lab": netlab up
+  "Start the lab": { cmd: netlab up, wait: True }
   "OSPF areas": netlab report ospf-areas
-  "Connect to PE1": netlab connect pe1
+  "Connect to PE1": { cmd: netlab connect pe1, wait: "pe1#" }
   "SR-MPLS prefix segments": show ip ospf segment-routing prefix-segments
   "SR-MPLS bindings": show ip ospf segment-routing bindings
   "Done with PE1": exit
-  "Stop the lab": netlab down --cleanup
+  "Stop the lab": { cmd: netlab down --cleanup, wait: True }
