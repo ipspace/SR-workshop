@@ -82,7 +82,7 @@ def run_demo(args: argparse.Namespace) -> None:
   cmd = ['tmux','new-session','-s',setup.session]
   if setup.shell:
     cmd += [ setup.shell ]
-  cmd += [';','split-window','-v','-l','1','python3',__file__,'--script',args.demo]
+  cmd += [';','split-window','-v','-l',str(setup.get('bottom_lines','1')),'python3',__file__,'--script',args.demo]
 
   subprocess.run(cmd)
 
@@ -96,15 +96,43 @@ def send_line(line: str, session: str, sleep: float = 0.03) -> None:
     subprocess.run(tmux_cmd + [ line ])
   subprocess.run(tmux_cmd + ['Enter'])
 
-def run_action(action: Box, session: str = 'demo') -> None:
+def wait_for_pane(wait: typing.Any, setup: Box) -> None:
+  if not setup.wait:
+    return
+  print('Waiting...',end="",flush=True)
+  start_time = time.time()
+  print_time = start_time
+  wait_string = wait if isinstance(wait,str) else setup.wait
+  try:
+    while True:
+      result = subprocess.run(
+                  ['tmux','capture-pane','-p','-S','999','-t',f'{setup.session}:0.0'],
+                  capture_output=True)
+      if wait_string in result.stdout.decode("utf-8"):
+        print("Completed")
+        return
+      now = time.time()
+      if now > print_time + 5:
+        print()
+        print(f'Waiting ({int(now - start_time)} seconds) ...',end="",flush=True)
+        print_time = now
+      time.sleep(0.25)
+
+  except KeyboardInterrupt:
+    print('Giving up')
+    return
+
+def run_action(action: Box, setup: Box) -> None:
   if action.switch:
     subprocess.run(['tmux','select-pane','-U'])
   elif action.cmd:
-    send_line(action.cmd,session)
+    send_line(action.cmd,setup.session)
     if action.more:
       confirm(bold('More...'),prompt=' ')
+    elif action.wait:
+      wait_for_pane(action.wait,setup)
   if action.more:
-    subprocess.run(['tmux','send-keys','-t',f'{session}:0.0','   ','q','C-u'])
+    subprocess.run(['tmux','send-keys','-t',f'{setup.session}:0.0','   ','q','C-u'])
 
 def run_script(args: argparse.Namespace) -> None:
   setup = read_setup(args)
@@ -123,7 +151,7 @@ def run_script(args: argparse.Namespace) -> None:
       continue
     elif not isinstance(action,Box):
       continue
-    run_action(action,session=setup.session)
+    run_action(action,setup=setup)
 
   confirm(bold('Done'))
   subprocess.run(['tmux','kill-session','-t',setup.session])

@@ -1,13 +1,13 @@
 ---
 directory: 1-intro/4-unnumbered
 steps:
-  "Start the lab": netlab up
+  "Start the lab": { cmd: netlab up, wait: True }
   "Addressing report": netlab report addressing
-  "Connect to PE1": netlab connect pe1
+  "Connect to PE1": { cmd: netlab connect pe1, wait: "pe1#" }
   "Interface configurations": show running-config section interface
   "Interface addresses": show ip interface brief
   "IS-IS neighbors": show isis neighbor
   "SR-MPLS prefix segments": show isis segment-routing prefix-segments
   "Adjacency segments": show isis segment-routing adjacency-segments
   "Done with PE1": exit
-  "Stop the lab": netlab down --cleanup
+  "Stop the lab": { cmd: netlab down --cleanup, wait: True }
