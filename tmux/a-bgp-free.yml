@@ -1,0 +1,12 @@
+---
+directory: 2-fun/1-bgp-free
+steps:
+  "Start the lab": { cmd: netlab up, wait: True }
+  "BGP report": netlab report bgp
+  "Connect to PE1": { cmd: netlab connect pe1, wait: "pe1#" }
+  "BGP sessions": show ip bgp summary
+  "BGP table": show ip bgp
+  "IP routing table": { cmd: show ip route, more: True }
+  "Done with PE1": exit
+  "Host-to-host ping": netlab connect ha ping -c 5 hb
+  "Stop the lab": { cmd: netlab down --cleanup, wait: True }
