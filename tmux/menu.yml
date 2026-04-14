@@ -1,0 +1,15 @@
+title: Segment Routing Workshop
+columns:
+- title: Simple Topologies
+  demos:
+    1-clab: Starting a lab with containerlab
+    2-netlab: Simple SR-MPLS with IS-IS
+    3-ds: Dual-Stack SR-MPLS
+    4-unnumbered: SR-MPLS using IS-IS with unnumbered interfaces
+    5-ospf: SR-MPLS with OSPFv2
+    6-multivendor: Multivendor SR-MPLS with IS-IS
+- title: Services over SR-MPLS
+  demos:
+    a-bgp-free: BGP-free core
+    b-mpls-vpn: MPLS/VPN using SR-MPLS transport
+    c-evpn: EVPN using SR-MPLS transport
