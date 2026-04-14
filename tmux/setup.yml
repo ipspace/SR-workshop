@@ -1,0 +1,3 @@
+shell: multipass shell
+session: demo
+directory: ~/SR-workshop

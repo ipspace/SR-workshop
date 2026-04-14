@@ -1,0 +1,16 @@
+---
+directory: 1-intro/3-ds
+steps:
+  "Start the lab": netlab up
+  "Addressing report": netlab report addressing
+  "IS-IS report": netlab report isis-nodes
+  "Connect to PE1": netlab connect pe1
+  "Enter vtysh": vtysh
+  "Running configuration": show running
+  "MPLS LFIB": { cmd: show mpls table }
+  "IS-IS database details": show isis database detail pe1.00-00
+  "IPv6 routing table": show ipv6 route
+  "Done with PE1": |-
+    exit
+    exit
+  "Stop the lab": netlab down --cleanup

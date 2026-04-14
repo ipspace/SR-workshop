@@ -1,0 +1,22 @@
+---
+directory: 1-intro/2-netlab
+steps:
+  "Start the lab": netlab up
+  "Addressing report": netlab report addressing
+  "IS-IS report": netlab report isis-nodes
+  "Connect to PE1": netlab connect pe1
+  "IS-IS configuration": |-
+
+    show run section router isis
+  "Loopback SR-MPLS configuration": |-
+
+    show run section interface Loopback0
+  "IS-IS database details": { cmd: show isis database pe1.00-00 detail, more: True }
+  "Segment routing overview": { cmd: show isis segment-routing, more: True }
+  "SR-MPLS prefix segments": show isis segment-routing prefix-segments
+  "MPLS LFIB": { cmd: show mpls route, more: True }
+  "Adjacency segments": show isis segment-routing adjacency-segments
+  "Global blocks": show isis segment-routing global-blocks
+  "Done with PE1": exit
+  "Supported devices": netlab show modules -m sr
+  "Stop the lab": netlab down --cleanup

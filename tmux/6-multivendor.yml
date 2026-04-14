@@ -1,0 +1,12 @@
+---
+directory: 1-intro/6-multivendor
+steps:
+  "Start the lab": netlab up --no-config
+  "Configure the lab": netlab initial
+  "Display available netlab reports": netlab show reports
+  "Report devices and images": netlab report devices
+  "Connect to PE1": netlab connect pe1
+  "Global blocks": show isis segment-routing global-blocks
+  "MPLS LFIB": { cmd: show mpls route, more: True }
+  "Done with PE1": exit
+  "Stop the lab": netlab down --cleanup
