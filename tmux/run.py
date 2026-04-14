@@ -10,11 +10,12 @@ from box import Box
 
 def parse_args(args: list) -> argparse.Namespace:
   parser = argparse.ArgumentParser(description='Run demo script')
-  parser.add_argument(
+  mode_group = parser.add_mutually_exclusive_group()
+  mode_group.add_argument(
     '-s','--script', dest='script',
     action='store',
     help='Demo script')
-  parser.add_argument(
+  mode_group.add_argument(
     '-r','--run', dest='demo',
     action='store',
     help='Run demo with the specified script')
