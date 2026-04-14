@@ -3,4 +3,5 @@ session: demo
 directory: ~/SR-workshop      # Change to demo directory on the lab server
 #wait: ubuntu@primary
 wait: '[primary]'             # Change to match the bash prompt on your system
+status_left: SR workshop
 #bottom_lines: 10             # Use for troubleshooting
