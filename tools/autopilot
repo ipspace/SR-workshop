@@ -1,0 +1,62 @@
+#!/usr/bin/env python3
+#
+import argparse
+import sys
+import typing
+import subprocess
+from box import Box
+
+from common import confirm, fetch_traceback
+from menu import show_menu
+from drive import run_script
+from demo import run_demo
+
+def parse_args(args: list) -> argparse.Namespace:
+  parser = argparse.ArgumentParser(description='Run demo script')
+  mode_group = parser.add_mutually_exclusive_group()
+  mode_group.add_argument(
+    '-s','--script', dest='script',
+    action='store',
+    help='Demo script')
+  mode_group.add_argument(
+    '-r','--run', dest='demo',
+    action='store',
+    help='Run demo with the specified script')
+  mode_group.add_argument(
+    '-m','--menu', dest='menu',
+    action='store',
+    help='Start autopilot with the specified top-level menu')
+  parser.add_argument(
+    '--setup', dest='setup',
+    action='store',default='setup.yml',
+    help='Setup file')
+  return parser.parse_args(args)
+
+def main() -> None:
+  cli_args = sys.argv[1:]
+  if not cli_args:
+    parse_args(['--help'])
+    return
+
+  args = parse_args(cli_args)
+  args.me = __file__
+  if args.menu:
+    show_menu(args)
+  elif args.demo:
+    run_demo(args)
+  elif args.script:
+    run_script(args)
+  else:
+    print('Unknown option, aborting')
+    sys.exit(2)
+
+if __name__ == '__main__':
+  try:
+    main()
+  except Exception as ex:
+    subprocess.run(['tmux','resize-pane','-y','50%'])
+    print(ex)
+    print(str(ex))
+    for line in fetch_traceback(ex):
+      print(line)
+    confirm('Exit')
