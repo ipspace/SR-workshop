@@ -33,15 +33,18 @@ def confirm(s: str, prompt: typing.Optional[str] = None) -> str:
   console.print(s,end="")
   try:
     return input(prompt or ' -> ').lower()
-  except KeyboardInterrupt as ex:
+  except EOFError:
     print('Bye')
+    sys.exit(0)
+  except KeyboardInterrupt:
+    print('How rude :( Bye')
     sys.exit(0)
 
 def confirm_abort(s: str) -> typing.Never:
   confirm(bold(s))
   sys.exit(1)
 
-def traceback(exc: Exception) -> list:
+def fetch_traceback(exc: Exception) -> list:
   loc_list = []
   tb = exc.__traceback__
   while tb:
@@ -76,9 +79,10 @@ def read_setup(args: argparse.Namespace) -> Box:
 def run_demo(args: argparse.Namespace) -> None:
   setup = read_setup(args)
 
-  cmd = ['tmux','new-session','-s',setup.session,setup.shell]
+  cmd = ['tmux','new-session','-s',setup.session]
+  if setup.shell:
+    cmd += [ setup.shell ]
   cmd += [';','split-window','-v','-l','1','python3',__file__,'--script',args.demo]
-  cmd += [';','select-pane','-L']
 
   subprocess.run(cmd)
 
@@ -146,6 +150,6 @@ if __name__ == '__main__':
     subprocess.run(['tmux','resize-pane','-y','50%'])
     print(ex)
     print(str(ex))
-    for line in traceback(ex):
+    for line in fetch_traceback(ex):
       print(line)
     confirm('Exit')
