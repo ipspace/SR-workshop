@@ -29,11 +29,11 @@ def parse_args(args: list) -> argparse.Namespace:
 def bold(s: str) -> str:
   return f'[bold]{s}[/bold]'
 
-def confirm(s: str, prompt: typing.Optional[str] = None, arrows: bool = False) -> str:
+def confirm(s: str, prompt: typing.Optional[str] = None, single_key: bool = False) -> str:
   console = rich.console.Console()
   console.print(s,end="")
   try:
-    if arrows:
+    if single_key:
       print(prompt or ' -> ',end='',flush=True)
       subprocess.run(['stty','cbreak'])
       result = None
@@ -48,7 +48,7 @@ def confirm(s: str, prompt: typing.Optional[str] = None, arrows: bool = False) -
       if result is None or result == b'\x04':
         print('Looks like we lost you')
         sys.exit(0)
-      return result
+      return result.decode(sys.stdin.encoding or 'utf-8', errors='ignore')
     else:
       return input(prompt or ' -> ').lower()
   except EOFError:
@@ -56,6 +56,7 @@ def confirm(s: str, prompt: typing.Optional[str] = None, arrows: bool = False) -
     sys.exit(0)
   except KeyboardInterrupt:
     print('How rude :( Bye')
+    subprocess.run(['stty','sane'])               # Just in case we got here from single-key reads
     sys.exit(0)
 
 def confirm_abort(s: str) -> typing.Never:
@@ -152,7 +153,7 @@ def run_action(action: Box, setup: Box) -> None:
   elif action.cmd:
     send_line(action.cmd,setup.session)
     if action.more:
-      confirm(bold('More...'),prompt=' ',arrows=True)
+      confirm(bold('More...'),prompt=' ',single_key=True)
     elif action.wait:
       wait_for_pane(action.wait,setup)
   if action.more:
@@ -168,7 +169,7 @@ def run_script(args: argparse.Namespace) -> None:
 
   send_line(f'cd {setup.directory}/{script.directory}',session=setup.session,sleep=0)
   for step in list(script.steps):
-    confirm(bold(step),arrows=True)
+    confirm(bold(step),single_key=True)
     action = script.steps[step]
     if isinstance(action,str):
       send_line(action,session=setup.session)
@@ -177,16 +178,16 @@ def run_script(args: argparse.Namespace) -> None:
       continue
     run_action(action,setup=setup)
 
-  confirm(bold('Done'),arrows=True)
+  confirm(bold('Done'),single_key=True)
   subprocess.run(['tmux','kill-session','-t',setup.session])
 
 def main() -> None:
-  args = sys.argv[1:]
-  if not args:
+  cli_args = sys.argv[1:]
+  if not cli_args:
     parse_args(['--help'])
     return
 
-  args = parse_args(sys.argv[1:])
+  args = parse_args(cli_args)
   if args.demo:
     run_demo(args)
   elif args.script:
