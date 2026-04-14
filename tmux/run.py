@@ -121,7 +121,7 @@ def run_script(args: argparse.Namespace) -> None:
     run_action(action,session=setup.session)
 
   confirm(bold('Done'))
-  subprocess.run(['tmux','kill-server'])
+  subprocess.run(['tmux','kill-session','-t',setup.session])
 
 def main() -> None:
   args = sys.argv[1:]
