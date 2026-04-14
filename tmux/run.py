@@ -82,6 +82,7 @@ def run_demo(args: argparse.Namespace) -> None:
   cmd = ['tmux','new-session','-s',setup.session]
   if setup.shell:
     cmd += [ setup.shell ]
+  cmd += [';','set','history-limit','500']
   cmd += [';','split-window','-v','-l',str(setup.get('bottom_lines','1')),'python3',__file__,'--script',args.demo]
 
   subprocess.run(cmd)
@@ -97,17 +98,18 @@ def send_line(line: str, session: str, sleep: float = 0.03) -> None:
   subprocess.run(tmux_cmd + ['Enter'])
 
 def wait_for_pane(wait: typing.Any, setup: Box) -> None:
-  if not setup.wait:
+  wait_string = wait if isinstance(wait,str) else setup.wait
+  if not wait_string:
     return
+
   print('Waiting...',end="",flush=True)
   start_time = time.time()
   print_time = start_time
-  wait_string = wait if isinstance(wait,str) else setup.wait
   try:
     while True:
       result = subprocess.run(
-                  ['tmux','capture-pane','-p','-S','999','-t',f'{setup.session}:0.0'],
-                  capture_output=True)
+                  ['tmux','capture-pane','-p','-S','9999','-t',f'{setup.session}:0.0'],
+                  capture_output=True,check=True)
       if wait_string in result.stdout.decode("utf-8"):
         print("Completed")
         return
@@ -118,6 +120,9 @@ def wait_for_pane(wait: typing.Any, setup: Box) -> None:
         print_time = now
       time.sleep(0.25)
 
+  except subprocess.CalledProcessError as ex:
+    print(f'tmux capture-pane failed: {str(ex)}')
+    return
   except KeyboardInterrupt:
     print('Giving up')
     return
