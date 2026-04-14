@@ -22,3 +22,8 @@ Use these commands to create lab topology reports:
 * **netlab report addressing** -- lab addressing
 * **netlab report isis-nodes** -- IS-IS routing
 * **netlab report mgmt** -- Management access to lab devices
+
+If you want to run scripted demos, use the **autopilot** tool included in the setup:
+
+* Edit the `autopilot/setup.yml` parameter file to match your environment
+* Start the tool with `tools/autopilot -m autopilot/menu.yml` from the top-level repository directory.
