@@ -7,6 +7,7 @@ import sys
 import typing
 import subprocess
 import rich.console
+import rich.table
 from box import Box
 
 def parse_args(args: list) -> argparse.Namespace:
@@ -18,6 +19,10 @@ def parse_args(args: list) -> argparse.Namespace:
     help='Demo script')
   mode_group.add_argument(
     '-r','--run', dest='demo',
+    action='store',
+    help='Run demo with the specified script')
+  mode_group.add_argument(
+    '-m','--menu', dest='menu',
     action='store',
     help='Run demo with the specified script')
   parser.add_argument(
@@ -186,6 +191,69 @@ def run_script(args: argparse.Namespace) -> None:
   confirm(bold('Done'),single_key=True)
   subprocess.run(['tmux','kill-session','-t',setup.session])
 
+def get_menu_title(title: str, desc: str) -> str:
+  return f"\\[{title[:1]}]: {desc}"
+
+def display_menu(menu: Box, last_selected: typing.Optional[str] = None) -> dict:
+  console = rich.console.Console()
+  table = rich.table.Table(
+            title=menu.get('title','The Demo')+"\n\n")
+  max_row = 0
+  selected: typing.Optional[str] = None
+  lookup: dict = {}
+
+  for col in menu.columns:
+    table.add_column(col.title)
+    max_row = max(max_row,len(col.demos))
+    for demo in col.demos:
+      key = demo[:1]
+      if last_selected == key:
+        last_selected = None
+      elif last_selected is None:
+        selected = key
+        last_selected = key
+      lookup[demo[:1]] = demo
+
+  lookup['selected'] = selected
+
+  table.add_row()
+  for ridx in range(0,max_row):
+    row_data = []
+    for col in menu.columns:
+      demo_titles = list(col.demos)
+      if len(demo_titles) > ridx:
+        d_key = demo_titles[ridx]
+        row_value = get_menu_title(d_key,col.demos[d_key])
+        if d_key[:1] == selected:
+          row_value = bold(row_value)
+        row_data.append(row_value)
+      else:
+        row_data.append("")
+
+    table.add_row(*row_data)
+
+  table.add_row()
+  console.clear()
+  console.print(table)
+  return lookup
+
+def show_menu(args) -> None:
+  menu = read_yaml(args.menu)
+  select: typing.Optional[str] = None
+  while True:
+    lookup = display_menu(menu,select)
+    print()
+    select = confirm(bold('Select demo'))
+    if not select:
+      select = lookup.get('selected','')
+    if select not in lookup:
+      confirm(bold('Invalid option'))
+      continue
+
+    exec_cmd = [__file__,'-r',lookup[select]+'.yml']
+    print(exec_cmd)
+    subprocess.run(exec_cmd)
+
 def main() -> None:
   cli_args = sys.argv[1:]
   if not cli_args:
@@ -193,7 +261,9 @@ def main() -> None:
     return
 
   args = parse_args(cli_args)
-  if args.demo:
+  if args.menu:
+    show_menu(args)
+  elif args.demo:
     run_demo(args)
   elif args.script:
     run_script(args)
