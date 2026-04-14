@@ -24,7 +24,7 @@ def parse_args(args: list) -> argparse.Namespace:
   mode_group.add_argument(
     '-m','--menu', dest='menu',
     action='store',
-    help='Run demo with the specified script')
+    help='Start autopilot with the specified top-level menu')
   parser.add_argument(
     '--setup', dest='setup',
     action='store',default='setup.yml',
@@ -248,10 +248,10 @@ def show_menu(args) -> None:
       select = lookup.get('selected','')
     if select not in lookup:
       confirm(bold('Invalid option'))
+      select = None
       continue
 
-    exec_cmd = [__file__,'-r',lookup[select]+'.yml']
-    print(exec_cmd)
+    exec_cmd = ['python3',__file__,'--setup',args.setup,'-r',lookup[select]+'.yml']
     subprocess.run(exec_cmd)
 
 def main() -> None:

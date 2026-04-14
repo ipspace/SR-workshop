@@ -13,5 +13,3 @@ columns:
     a-bgp-free: BGP-free core
     b-mpls-vpn: MPLS/VPN using SR-MPLS transport
     c-evpn: EVPN using SR-MPLS transport
-
-    
