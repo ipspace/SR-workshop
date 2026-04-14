@@ -1,0 +1,11 @@
+---
+directory: 2-fun/2-mpls-vpn
+steps:
+  "Start the lab": { cmd: netlab up, wait: True }
+  "Connect to PE1": { cmd: netlab connect pe1, wait: "pe1#" }
+  "VRFs": show vrf
+  "VPNv4 routes": { cmd: show bgp vpn-ipv4 detail, more: True }
+  "VRF IP routing table": { cmd: show ip route vrf tenant, more: True }
+  "Done with PE1": exit
+  "Host-to-host ping": netlab connect ha ping -c 5 hb
+  "Stop the lab": { cmd: netlab down --cleanup, wait: True }

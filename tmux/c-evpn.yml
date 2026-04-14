@@ -1,0 +1,12 @@
+---
+directory: 2-fun/3-evpn
+steps:
+  "Start the lab": { cmd: netlab up, wait: True }
+  "Host-to-host ping": netlab connect ha ping -c 5 hb
+  "Connect to PE1": { cmd: netlab connect pe1, wait: "pe1#" }
+  "EVPN MAC-IP routes": { cmd: show bgp evpn route-type mac-ip detail, more: True }
+  "MAC forwarding table": { cmd: show l2rib input all detail, more: True }
+  "RIB entry for remote PE": show tunnel rib 10.0.0.3/32 candidates
+  "Done with PE1": exit
+  "Devices supporting EVPN": netlab show modules -m evpn
+  "Stop the lab": { cmd: netlab down --cleanup, wait: True }
