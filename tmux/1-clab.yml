@@ -1,0 +1,11 @@
+---
+directory: 1-intro/1-clab
+steps:
+  "Start the lab": containerlab deploy
+  "Connect with Docker": docker exec -it clab-intro-p Cli
+  "Explore":
+    switch: True
+  "Connect with SSH": ssh admin@clab-intro-p
+  "Complete the login":
+    switch: True
+  "Stop the lab": containerlab destroy
