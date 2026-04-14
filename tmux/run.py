@@ -136,6 +136,7 @@ def main() -> None:
     run_script(args)
   else:
     print('Unknown option, aborting')
+    sys.exit(2)
 
 if __name__ == '__main__':
   try:
