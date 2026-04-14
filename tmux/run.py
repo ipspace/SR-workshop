@@ -102,6 +102,7 @@ def run_demo(args: argparse.Namespace) -> None:
   if setup.shell:
     cmd += [ setup.shell ]
   cmd += [';','set','history-limit','500']
+  cmd += [';','setw','-g','mouse','on']
   cmd += [';','split-window','-v','-l',str(setup.get('bottom_lines','1'))]
   cmd += ['python3',__file__,'--script',args.demo]
 
