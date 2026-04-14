@@ -5,6 +5,7 @@ import sys
 import typing
 import subprocess
 from box import Box
+from pathlib import Path
 
 from common import confirm, fetch_traceback
 from menu import show_menu
@@ -39,7 +40,7 @@ def main() -> None:
     return
 
   args = parse_args(cli_args)
-  args.me = __file__
+  args.me = str(Path(__file__).resolve())
   if args.menu:
     show_menu(args)
   elif args.demo:
