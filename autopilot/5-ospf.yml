@@ -4,6 +4,8 @@ steps:
   "Start the lab": { cmd: netlab up, wait: True }
   "OSPF areas": netlab report ospf-areas
   "Connect to PE1": { cmd: netlab connect pe1, wait: "pe1#" }
+  "OSPF database": { cmd: show ip ospf database, more: True }
+  "Local opaque LSAs": { cmd: show ip ospf database opaque-area adv-router 10.0.0.1, more: True }
   "SR-MPLS prefix segments": show ip ospf segment-routing prefix-segments
   "SR-MPLS bindings": show ip ospf segment-routing bindings
   "Done with PE1": exit
